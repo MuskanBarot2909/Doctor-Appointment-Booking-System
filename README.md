@@ -2,7 +2,24 @@
 
 ## API Endpoints
 
-### 1. Book Appointment API
+### 1. Get Available Slots API
+   - **Endpoint**: `GET /api/appointments/slots/Dr.%20Smith`
+   - **Description**: Retrieve available appointment slots for a specific doctor.
+   - **Response**:
+     ```json
+     {
+         "doctor": "Dr. Smith",
+         "availableSlots": [
+             "10:00 AM - 11:00 AM",
+             "11:00 AM - 12:00 PM",
+             "01:00 PM - 02:00 PM"
+         ]
+     }
+     ```
+
+---
+
+### 2. Book Appointment API
    - **Endpoint**: `POST /api/appointments/book`
    - **Description**: Book an appointment with a doctor.
    - **Request Body**:
@@ -31,7 +48,7 @@
 
 ---
 
-### 2. Get Appointment by Patient Email
+### 3. Get Appointment by Patient Email
    - **Endpoint**: `GET /api/appointments/details?email=muskan@example.com`
    - **Description**: Retrieve appointment details using the patient's email.
    - **Response**:
@@ -47,7 +64,7 @@
 
 ---
 
-### 3. Get Appointments by Doctor Name
+### 4. Get Appointments by Doctor Name
    - **Endpoint**: `GET /api/appointments/doctor/Dr.%20Smith`
    - **Description**: Get a list of appointments for a specific doctor.
    - **Response**:
@@ -65,7 +82,7 @@
 
 ---
 
-### 4. Modify Appointment Time
+### 5. Modify Appointment Time
    - **Endpoint**: `PUT /api/appointments/modify`
    - **Description**: Modify the time slot of an existing appointment.
    - **Request Body**:
@@ -92,7 +109,7 @@
 
 ---
 
-### 5. Delete Appointment
+### 6. Delete Appointment
    - **Endpoint**: `DELETE /api/appointments/cancel`
    - **Description**: Cancel an existing appointment.
    - **Request Body**:
@@ -110,5 +127,3 @@
      ```
 
 ---
-
-
