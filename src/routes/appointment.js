@@ -7,5 +7,5 @@ router.get('/details', appointmentController.getAppointmentDetails);
 router.get('/doctor/:name', appointmentController.getAppointmentsByDoctor);
 router.delete('/cancel', appointmentController.cancelAppointment);
 router.put('/modify', appointmentController.modifyAppointment);
-
+router.get('/slots/:doctor', appointmentController.getAvailableSlots);
 module.exports = router;

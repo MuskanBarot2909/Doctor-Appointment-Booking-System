@@ -1,10 +1,33 @@
 const appointmentModel = require('../models/appointmentModel');
-
+const doctorModel = require('../models/doctorModel');
 const bookAppointment = (req, res) => {
     const { firstName, lastName, email, timeSlot, doctor } = req.body;
+
+    // Check if the doctor exists and has the requested time slot available
+    const availableSlots = doctorModel.getAvailableSlots(doctor);
+    if (!availableSlots || !availableSlots.includes(timeSlot)) {
+        return res.status(400).json({ message: 'Selected time slot is not available' });
+    }
+
+    // Book the appointment (remove the slot from the available list)
+    if (!doctorModel.bookSlot(doctor, timeSlot)) {
+        return res.status(400).json({ message: 'Unable to book the appointment. Slot might be taken' });
+    }
+
     const appointment = { firstName, lastName, email, timeSlot, doctor };
     appointmentModel.addAppointment(appointment);
     res.status(201).json({ message: 'Appointment booked', appointment });
+};
+
+const getAvailableSlots = (req, res) => {
+    const { doctor } = req.params;
+    const availableSlots = doctorModel.getAvailableSlots(doctor);
+    
+    if (availableSlots && availableSlots.length > 0) {
+        res.json({ doctor, availableSlots });
+    } else {
+        res.status(404).json({ message: 'No available slots for this doctor' });
+    }
 };
 
 const getAppointmentDetails = (req, res) => {
@@ -44,5 +67,6 @@ module.exports = {
     getAppointmentDetails,
     getAppointmentsByDoctor,
     cancelAppointment,
-    modifyAppointment
+    modifyAppointment,
+    getAvailableSlots
 };
